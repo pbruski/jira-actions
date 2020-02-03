@@ -32,11 +32,12 @@ import java.util.*
  */
 class RichTextEditorIT {
     private val logger: Logger = LogManager.getLogger(this::class.java)
-
+    
+    private val jiraSoftwareVersion = JiraCoreScenarioIT.JIRA_SOFTWARE_VERSION
+    
     @Test
     fun shouldRunScenarioWithoutErrors() {
-        val version = System.getenv("JIRA_SOFTWARE_VERSION") ?: "8.0.0"
-        logger.info("Testing Jira $version")
+        logger.info("Testing Jira $jiraSoftwareVersion")
         val scenario = JiraEditScenario()
         val metrics = mutableListOf<ActionMetric>()
         val actionMeter = ActionMeter(
@@ -57,7 +58,7 @@ class RichTextEditorIT {
         }
 
         JiraCoreFormula.Builder()
-            .version(version)
+            .version(jiraSoftwareVersion)
             .build()
             .provision()
             .use { jira ->

@@ -23,6 +23,9 @@ import java.util.*
 class JiraCoreScenarioIT {
     private val logger: Logger = LogManager.getLogger(this::class.java)
 
+    companion object {
+        val JIRA_SOFTWARE_VERSION = System.getenv("JIRA_SOFTWARE_VERSION") ?: "8.5.0"
+    }
     /**
      * During the test, you can connect to WebDriver by the VNC viewer.
      * DockerisedChrome opens the port 5900 so executing command
@@ -32,8 +35,7 @@ class JiraCoreScenarioIT {
      */
     @Test
     fun shouldRunScenarioWithoutErrors() {
-        val version = System.getenv("JIRA_SOFTWARE_VERSION") ?: "8.0.0"
-        logger.info("Testing Jira $version")
+        logger.info("Testing Jira $JIRA_SOFTWARE_VERSION")
         val scenario = JiraCoreScenario()
         val metrics = mutableListOf<ActionMetric>()
         val actionMeter = ActionMeter(
@@ -56,7 +58,7 @@ class JiraCoreScenarioIT {
         var secondBackupElement = true
 
         JiraCoreFormula.Builder()
-            .version(version)
+            .version(JIRA_SOFTWARE_VERSION)
             .build()
             .provision()
             .use { jira ->
