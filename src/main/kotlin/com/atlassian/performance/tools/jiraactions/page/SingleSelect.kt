@@ -27,14 +27,14 @@ internal class SingleSelect(
         inputElement.sendKeys(Keys.BACK_SPACE, value, Keys.TAB)
     }
 
-    fun select(picker: (Collection<String>) -> String) {
+    fun select(picker: (List<String>) -> String) {
         val inputElement = driver.wait(elementToBeClickable(inputLocator))
         inputElement.click()
 
         val availableValues = parseSuggestions().plus(getValue(inputElement))
         inputElement.sendKeys(Keys.BACK_SPACE, picker(availableValues), Keys.TAB)
     }
-    
+
     fun getSuggestions(): List<String> {
         val dropMenuArrow = driver
             .wait(
